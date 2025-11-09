@@ -10,6 +10,7 @@ interface Message {
   text: string;
   isUser: boolean;
   timestamp: string;
+  attachments?: Array<{ url: string; fileName: string }>;
 }
 
 interface ChatWindowProps {
@@ -39,7 +40,7 @@ const ChatWindow = ({ onClose }: ChatWindowProps) => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSendMessage = async (text: string) => {
+  const handleSendMessage = async (text: string, attachments?: Array<{ url: string; fileName: string }>) => {
     const userMessage: Message = {
       id: Date.now().toString(),
       text,
@@ -48,25 +49,141 @@ const ChatWindow = ({ onClose }: ChatWindowProps) => {
         hour: "2-digit",
         minute: "2-digit",
       }),
+      attachments,
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setIsTyping(true);
 
-    // Simulate AI response delay
-    setTimeout(() => {
+    try {
+      // Prepare messages for AI
+      const apiMessages = messages.map(msg => {
+        const content: any[] = [{ type: "text", text: msg.text }];
+        
+        // Add images to the message content
+        if (msg.attachments) {
+          msg.attachments.forEach(attachment => {
+            if (attachment.fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+              content.push({
+                type: "image_url",
+                image_url: { url: attachment.url }
+              });
+            }
+          });
+        }
+        
+        return {
+          role: msg.isUser ? "user" : "assistant",
+          content: content.length === 1 ? content[0].text : content
+        };
+      });
+
+      // Add current message
+      const currentContent: any[] = [{ type: "text", text }];
+      if (attachments) {
+        attachments.forEach(attachment => {
+          if (attachment.fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+            currentContent.push({
+              type: "image_url",
+              image_url: { url: attachment.url }
+            });
+          }
+        });
+      }
+      
+      apiMessages.push({
+        role: "user",
+        content: currentContent.length === 1 ? currentContent[0].text : currentContent
+      });
+
+      const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-stream`;
+      const response = await fetch(CHAT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      if (!response.ok || !response.body) {
+        throw new Error('Failed to get AI response');
+      }
+
+      // Stream the response
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let streamDone = false;
+      let botMessageText = "";
+
+      // Create initial bot message
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Ik verwerk je vraag... Dit is een voorbeeldantwoord. Binnenkort krijg je hier een echt AI-antwoord!",
+        text: "",
         isUser: false,
         timestamp: new Date().toLocaleTimeString("nl-NL", {
           hour: "2-digit",
           minute: "2-digit",
         }),
       };
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages(prev => [...prev, botMessage]);
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              botMessageText += content;
+              setMessages(prev => {
+                const newMessages = [...prev];
+                const lastMessage = newMessages[newMessages.length - 1];
+                if (lastMessage && !lastMessage.isUser) {
+                  lastMessage.text = botMessageText;
+                }
+                return newMessages;
+              });
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
+
       setIsTyping(false);
-    }, 1500);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "Sorry, er is een fout opgetreden. Probeer het opnieuw.",
+        isUser: false,
+        timestamp: new Date().toLocaleTimeString("nl-NL", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -86,6 +203,7 @@ const ChatWindow = ({ onClose }: ChatWindowProps) => {
             message={message.text}
             isUser={message.isUser}
             timestamp={message.timestamp}
+            attachments={message.attachments}
           />
         ))}
         {isTyping && (

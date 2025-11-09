@@ -1,7 +1,25 @@
 # VloerBot - WordPress Embedding Instructies
 
 ## Overzicht
-Deze chatbot widget is gebouwd met React, Vite en Framer Motion. Je kunt hem embedden in elke WordPress-site.
+Deze chatbot widget is gebouwd met React, Vite en Framer Motion en is verbonden met Lovable Cloud voor AI-functionaliteit en bestandsopslag.
+
+## Functies
+
+### 🤖 Echte AI-integratie
+- Gebruikt Google Gemini 2.5 Flash voor intelligente gesprekken
+- Streaming responses voor natuurlijke conversatie
+- Gespecialiseerd in vloeradvies en expertise
+
+### 📎 Bestandsupload
+- Upload afbeeldingen (JPG, PNG, GIF, WebP)
+- Upload documenten (PDF, DOC, DOCX)
+- Maximale bestandsgrootte: 10MB
+- AI kan afbeeldingen analyseren voor specifiek advies
+
+### ⚡ Backend-functionaliteit
+- Beveiligde file storage via Lovable Cloud
+- Edge functions voor AI-communicatie
+- Geen externe API keys nodig (alles vooraf geconfigureerd)
 
 ## Build Instructies
 
