@@ -1,3 +1,4 @@
+
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -8,29 +9,27 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ onClose, profileImage }: ChatHeaderProps) => {
   return (
-    <div className="bg-primary text-primary-foreground px-6 py-4 flex items-center justify-between border-b border-border/10">
-      <div className="flex items-center space-x-3">
-        {profileImage ? (
-          <img 
-            src={profileImage} 
-            alt="VloerBot" 
-            className="w-10 h-10 rounded-full object-cover"
-          />
-        ) : (
-          <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-accent-foreground font-bold">
-            VB
-          </div>
-        )}
-        <div>
-          <h3 className="font-semibold text-base">VloerBot</h3>
-          <p className="text-xs text-primary-foreground/70">AI Assistent</p>
+    <div className="bg-[#d5803f] text-white px-4 py-3 flex items-center justify-between">
+      {profileImage ? (
+        <img 
+          src={profileImage} 
+          alt="VloerBot" 
+          className="w-8 h-8 rounded-full object-cover"
+        />
+      ) : (
+        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-sm">
+          🤖
         </div>
+      )}
+      <div>
+        <h3 className="font-semibold text-sm">VloerBot</h3>
       </div>
+      
       <Button
         variant="ghost"
         size="icon"
         onClick={onClose}
-        className="text-primary-foreground hover:bg-primary-foreground/10 rounded-full"
+        className="text-white hover:bg-white/10 rounded-full h-8 w-8 ml-auto"
       >
         <X className="w-5 h-5" />
       </Button>

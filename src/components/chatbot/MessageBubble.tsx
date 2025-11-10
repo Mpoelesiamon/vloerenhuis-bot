@@ -32,13 +32,13 @@ const MessageBubble = ({ message, isUser, timestamp, attachments }: MessageBubbl
           </div>
         )}
         <div
-          className={`px-4 py-3 rounded-2xl ${
+          className={`px-3 py-2 rounded-2xl ${
             isUser
-              ? "bg-chat-user-bg text-chat-user-fg rounded-br-sm"
-              : "bg-chat-bot-bg text-chat-bot-fg rounded-bl-sm"
+              ? "bg-[#d5803f] text-white rounded-br-sm"
+              : "bg-[#e2e8f0] text-gray-800 rounded-bl-sm"
           }`}
         >
-          <p className="text-[18px] leading-relaxed whitespace-pre-wrap break-words font-sans">
+          <p className="text-[12px] leading-relaxed whitespace-pre-wrap break-words font-sans">
             {message}
           </p>
         </div>

@@ -60,16 +60,14 @@ const FileUpload = ({ onFileUploaded }: FileUploadProps) => {
         disabled={uploading}
         accept="image/jpeg,image/png,image/gif,image/webp,application/pdf,.doc,.docx"
       />
-      <Button
+      <button
         type="button"
-        variant="ghost"
-        size="icon"
         disabled={uploading}
         onClick={() => document.getElementById('file-upload')?.click()}
-        className="text-muted-foreground hover:text-foreground"
+        className="bg-[#d5803f] text-white hover:bg-[#c17235] rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center transition-colors"
       >
-        <Paperclip className="w-5 h-5" />
-      </Button>
+        <Paperclip className="w-4 h-4" />
+      </button>
     </div>
   );
 };

@@ -38,9 +38,9 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="border-t border-border bg-background p-4">
+    <form onSubmit={handleSubmit} className="border-t border-border bg-background p-3">
       {attachments.length > 0 && (
-        <div className="mb-3 flex flex-wrap">
+        <div className="mb-2 flex flex-wrap">
           {attachments.map((attachment, index) => (
             <AttachmentPreview
               key={index}
@@ -57,20 +57,19 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Stel een vraag of upload een bestand..."
+          placeholder="Ask me anything..."
           disabled={disabled}
           rows={1}
-          className="flex-1 resize-none bg-secondary text-foreground rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed max-h-32 min-h-[44px]"
+          className="flex-1 resize-none bg-white text-gray-800 rounded-lg px-3 py-2.5 text-[12px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d5803f] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed max-h-32 min-h-[40px]"
           style={{ fieldSizing: "content" } as React.CSSProperties}
         />
-        <Button
+        <button
           type="submit"
-          size="icon"
           disabled={(!message.trim() && attachments.length === 0) || disabled}
-          className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl h-11 w-11 flex-shrink-0"
+          className="bg-[#d5803f] text-white hover:bg-[#c17235] rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center transition-colors"
         >
-          <Send className="w-5 h-5" />
-        </Button>
+          <Send className="w-4 h-4" />
+        </button>
       </div>
     </form>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { X } from "lucide-react";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import MessageBubble from "./MessageBubble";
@@ -20,8 +21,8 @@ interface ChatWindowProps {
 
 const ChatWindow = ({ onClose, isOpen }: ChatWindowProps) => {
   const getInitialGreeting = () => {
-    const dutchGreeting = "Hallo! Ik ben VloerBot, jouw AI-assistent voor vloeren. Hoe kan ik je helpen?";
-    const englishGreeting = "Hi! I'm VloerBot, your flooring AI assistant. How can I help you today?";
+    const dutchGreeting = "Wil je een chatbot (zoals deze) toevoegen aan je website? Ik ben een AI-bot die je kan helpen! 😊\n\nWat wil je als volgende doen?";
+    const englishGreeting = "Want to add a chatbot (like this one) to your website? I'm an AI bot that's here to help! 😊\n\nWhat would you like to do next?";
 
     if (typeof navigator === "undefined") {
       return englishGreeting;
@@ -220,13 +221,14 @@ const ChatWindow = ({ onClose, isOpen }: ChatWindowProps) => {
   };
 
 
+
   return (
     <motion.div
-      initial={{ x: "100%" }}
-      animate={{ x: 0 }}
-      exit={{ x: "100%" }}
+      initial={{ y: "100%" }}
+      animate={{ y: 0 }}
+      exit={{ y: "100%" }}
       transition={{ type: "spring", damping: 25, stiffness: 200 }}
-      className="fixed right-0 top-0 h-full w-full md:w-[380px] bg-background shadow-2xl flex flex-col z-[9999]"
+      className="fixed right-0 bottom-0 h-[80vh] w-full md:w-[380px] bg-background shadow-2xl flex flex-col z-[9999] md:right-6 md:bottom-6 md:rounded-lg overflow-hidden"
     >
       <ChatHeader 
         onClose={onClose} 
@@ -235,7 +237,7 @@ const ChatWindow = ({ onClose, isOpen }: ChatWindowProps) => {
           : undefined} 
       />
       
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
         {messages.map((message) => (
           <MessageBubble
             key={message.id}
