@@ -3,7 +3,7 @@
  * Plugin Name: VloerBot Chatbot
  * Plugin URI: https://github.com/yourusername/vloerenhuis-bot
  * Description: AI-powered chatbot widget for flooring companies. Provides intelligent customer support with file upload capabilities.
- * Version: 1.0.0
+ * Version: 1.0.12
  * Author: Your Name
  * Author URI: https://yourwebsite.com
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('VLOERBOT_VERSION', '1.0.0');
+define('VLOERBOT_VERSION', '1.0.12');
 define('VLOERBOT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('VLOERBOT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('VLOERBOT_PLUGIN_BASENAME', plugin_basename(__FILE__));

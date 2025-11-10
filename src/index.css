@@ -153,4 +153,26 @@ All colors MUST be HSL.
     font-size: 18px;
     color: hsl(23 32% 19%); /* #402D21 */
   }
+  
+  /* Force remove ALL hover effects on chatbot buttons */
+  #vloerbot-root button:hover,
+  #vloerbot-root button:active,
+  #vloerbot-root button:focus {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  
+  /* Specific button overrides */
+  #vloerbot-root button[type="submit"]:hover,
+  #vloerbot-root button[type="submit"]:active,
+  #vloerbot-root button[type="submit"]:focus {
+    background-color: #D5803F !important;
+  }
+  
+  #vloerbot-root button[type="button"]:hover,
+  #vloerbot-root button[type="button"]:active,
+  #vloerbot-root button[type="button"]:focus {
+    background-color: #D5803F !important;
+  }
 }

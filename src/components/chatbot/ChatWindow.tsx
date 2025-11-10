@@ -21,8 +21,8 @@ interface ChatWindowProps {
 
 const ChatWindow = ({ onClose, isOpen }: ChatWindowProps) => {
   const getInitialGreeting = () => {
-    const dutchGreeting = "Wil je een chatbot (zoals deze) toevoegen aan je website? Ik ben een AI-bot die je kan helpen! 😊\n\nWat wil je als volgende doen?";
-    const englishGreeting = "Want to add a chatbot (like this one) to your website? I'm an AI bot that's here to help! 😊\n\nWhat would you like to do next?";
+    const dutchGreeting = "Welkom bij Drents Vloerenhuis! 👋\n\nIk help je graag met advies over:\n• PVC vloeren\n• Laminaat\n• Raamdecoratie\n• Traprenovatie\n\nVan meting tot montage - perfect geregeld!\n\nWaar kan ik je mee helpen?";
+    const englishGreeting = "Welcome to Drents Vloerenhuis! 👋\n\nI'm happy to help you with:\n• PVC flooring\n• Laminate\n• Window decoration\n• Stair renovation\n\nFrom measurement to installation - perfectly arranged!\n\nHow can I help you?";
 
     if (typeof navigator === "undefined") {
       return englishGreeting;

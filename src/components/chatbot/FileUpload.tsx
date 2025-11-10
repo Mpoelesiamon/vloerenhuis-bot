@@ -64,7 +64,15 @@ const FileUpload = ({ onFileUploaded }: FileUploadProps) => {
         type="button"
         disabled={uploading}
         onClick={() => document.getElementById('file-upload')?.click()}
-        className="bg-[#d5803f] text-white hover:bg-[#c17235] rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center transition-colors"
+        className="text-white rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center"
+        style={{ 
+          hover: 'none', 
+          backgroundColor: '#D5803F',
+          border: 'none',
+          outline: 'none'
+        }}
+        onMouseEnter={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#D5803F'; }}
+        onMouseLeave={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#D5803F'; }}
       >
         <Paperclip className="w-4 h-4" />
       </button>

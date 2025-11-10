@@ -10,29 +10,25 @@ interface ChatHeaderProps {
 const ChatHeader = ({ onClose, profileImage }: ChatHeaderProps) => {
   return (
     <div className="bg-[#d5803f] text-white px-4 py-3 flex items-center justify-between">
-      {profileImage ? (
-        <img 
-          src={profileImage} 
-          alt="VloerBot" 
-          className="w-8 h-8 rounded-full object-cover"
-        />
-      ) : (
-        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-sm">
-          🤖
-        </div>
-      )}
-      <div>
-        <h3 className="font-semibold text-sm">VloerBot</h3>
-      </div>
+      <h3 className="font-bold text-base" style={{ fontFamily: 'Crimson Pro, serif', fontWeight: 700 }}>VloerBot</h3>
       
-      <Button
-        variant="ghost"
-        size="icon"
+      <button
         onClick={onClose}
-        className="text-white hover:bg-white/10 rounded-full h-8 w-8 ml-auto"
+        className="text-white rounded-full h-8 w-8 flex items-center justify-center"
+        style={{ 
+          fontFamily: 'Crimson Pro, serif', 
+          fontWeight: 700, 
+          background: 'transparent',
+          backgroundColor: 'transparent',
+          hover: 'none',
+          border: 'none',
+          outline: 'none'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
       >
-        <X className="w-5 h-5" />
-      </Button>
+        <span className="text-xl leading-none">×</span>
+      </button>
     </div>
   );
 };

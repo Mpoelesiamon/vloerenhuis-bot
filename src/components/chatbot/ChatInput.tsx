@@ -66,7 +66,15 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
         <button
           type="submit"
           disabled={(!message.trim() && attachments.length === 0) || disabled}
-          className="bg-[#d5803f] text-white hover:bg-[#c17235] rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center transition-colors"
+          className="text-white rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center"
+          style={{ 
+            hover: 'none', 
+            backgroundColor: '#D5803F',
+            border: 'none',
+            outline: 'none'
+          }}
+          onMouseEnter={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#D5803F'; }}
+          onMouseLeave={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#D5803F'; }}
         >
           <Send className="w-4 h-4" />
         </button>
